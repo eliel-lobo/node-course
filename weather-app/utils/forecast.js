@@ -4,7 +4,7 @@ const accessToken = 'e7836db253a09a4fafa6c1a74d19872d'
 const baseUrl = 'http://api.weatherstack.com/'
 const endpoint = 'current'
 
-const forecast = ({longitude, latitude, location}, callback) => {
+const forecast = ({ longitude, latitude, location }, callback) => {
 
     const url = baseUrl + endpoint + '?access_key=' + accessToken + '&query=' + latitude + ',' + longitude + '&units=m'
 

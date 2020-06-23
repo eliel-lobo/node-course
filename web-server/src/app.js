@@ -20,7 +20,7 @@ app.use(express.static(publicAssetsPath))
 app.get('', (req, res) => {
     res.render('index', 
     {
-        title: 'Welcome to weather app',
+        title: 'Weather App',
         name: 'Eliel Lobo'
     })
 })

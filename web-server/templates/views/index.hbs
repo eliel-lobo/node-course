@@ -5,15 +5,24 @@
         <title>Weather</title>
         <link rel="stylesheet" href="/css/styles.css">
         <link rel="icon" href="/img/weather-icon.png">
-        
     </head>
 
     <body>
         <div class="main-content">
             {{>header}}
-            <img class="portrait" src='/img/weather.png'>
+
+            <h2>Use this page to get the weather</h2>
+            <form>
+                <input placeholder="Location">
+                <button>Submit</button>
+            </form>
+
+            <p id="message-1"></p>
+            <p id="message-2"></p>
         </div>
 
         {{>footer}}
     </body>
+
+    <script src="/js/weather-client.js"></script>
 </html>  

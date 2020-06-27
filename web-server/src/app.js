@@ -1,8 +1,11 @@
 const path = require('path')
 const express = require('express')
 const hbs = require('hbs')
+const forecast = require('./utils/forecast')
+const geocode = require('./utils/geocode')
 
 const app = express()
+const port = process.env.PORT || 3000
 
 // Setup constantst used by express and handlebars
 const publicAssetsPath = path.join(__dirname, '../public')
@@ -48,7 +51,33 @@ app.get('/about', (req, res) => {
 })
 
 app.get('/weather', (req, res) => {
-    res.send('The weather')
+    const address = req.query.address
+    if (!address) {
+        return res.send({
+                error: "address was not provided and it is mandatory"
+            }
+        )
+    }
+
+    geocode(req.query.address, (error, data) => {
+        if (error) {
+            return res.send({ error })
+        } 
+
+        forecast(data, (forecastError, {location, temperature, description}) => {
+            if (forecastError) {
+                return res.send({error: forecastError})
+            } 
+            
+            res.send({
+                forecast: 'Weather is ' + description + ' in ' + location + '. It is making ' + temperature + ' degrees outside.',
+                location,
+                address
+            })
+        })      
+    })
+
+    
 })
 
 app.get('*', (req, res) => {
@@ -59,6 +88,6 @@ app.get('*', (req, res) => {
     })
 })
 
-app.listen(3000, (req, res) => {
-    console.log('Server started at port 3000')
+app.listen(port, (req, res) => {
+    console.log('Server started at port port')
 })

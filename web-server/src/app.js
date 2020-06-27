@@ -64,13 +64,15 @@ app.get('/weather', (req, res) => {
             return res.send({ error })
         } 
 
-        forecast(data, (forecastError, {location, temperature, description}) => {
+        forecast(data, (forecastError, {location, temperature, description, wind_speed, humidity}) => {
             if (forecastError) {
                 return res.send({error: forecastError})
             } 
             
+            const forecastText = 'Weather is ' + description + ' in ' + location + '. It is making ' + temperature + 
+                ' degrees outside with a wind speed of ' + wind_speed + 'kmph and a humidity of ' + humidity
             res.send({
-                forecast: 'Weather is ' + description + ' in ' + location + '. It is making ' + temperature + ' degrees outside.',
+                forecast: forecastText,
                 location,
                 address
             })

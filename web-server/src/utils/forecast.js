@@ -25,7 +25,9 @@ const forecast = ({ longitude, latitude, location }, callback) => {
                     {
                         temperature: current.temperature,
                         description: current.weather_descriptions[0],
-                        location: location
+                        location: location,
+                        humidity: current.humidity,
+                        wind_speed: current.wind_speed
                     })
             } else {
                 callback('It wasn\'t possible to get the forecast for ' + geocode.location)

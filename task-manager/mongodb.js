@@ -7,6 +7,8 @@ const databaseName = 'task-manager'
 
 const taskToDelete = process.argv[2]
 
+// This is a demonstration on the mongodb configuration. For this project we use mongoose which abstrachs much of this usage
+
 MongoClient.connect(dbConnectionUrl, { useNewUrlParser: true }, (error, client) => {
     
     if (error) {

@@ -6,7 +6,7 @@ const auth = async (req, res, next) => {
         if (!req.headers.authorization) {
             throw new Error('Authorization missing')
         }
-
+        console.log(req.headers.authorization)
         const token = req.headers.authorization.replace('Bearer ', '')
         const decoded = jwt.verify(token, 'thisismytoken')
         const user = await User.findOne({ _id: decoded._id, 'tokens.token': token })
@@ -18,6 +18,7 @@ const auth = async (req, res, next) => {
         req.user = user
         next()
     } catch (e) {
+        console.log(e)
         res.status(401).send({ message: e.message})
     }
 }

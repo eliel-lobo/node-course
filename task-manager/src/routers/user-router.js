@@ -33,6 +33,32 @@ router.post('/users/login', async (req, res) => {
     }
 })
 
+router.post('/users/logout', auth, async (req, res) => {
+    try {
+        const user = req.user
+        user.tokens = user.tokens.filter((t) => t.token !== req.token)
+
+        await user.save()
+        res.send()
+    } catch (e) {
+        console.log(e)
+        res.status(500).send({ message: e.message})
+    }
+})
+
+router.post('/users/logoutAll', auth, async (req, res) => {
+    try {
+        const user = req.user
+        user.tokens = []
+
+        await user.save()
+        res.send()
+    } catch (e) {
+        console.log(e)
+        res.status(500).send({ message: e.message})
+    }
+})
+
 router.get('/users/:id', async (req, res) => {
     try {
         const id = req.params.id

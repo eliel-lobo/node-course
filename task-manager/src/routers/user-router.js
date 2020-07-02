@@ -39,7 +39,9 @@ router.patch('/users/:id', async (req, res) => {
 
     try {
         const id = req.params.id
-        const user = await User.findByIdAndUpdate(id, req.body, { new: true, runValidators: true})
+        const user = await User.findById(id)
+        updates.forEach((update) => user[update] = req.body[update])
+        await user.save()
         
         if (user) {
             res.send(user)
@@ -74,6 +76,16 @@ router.post('/users', async (req, res) => {
         res.status(201).send(user)
     } catch (e) {
         res.status(400).send(e)
+    }
+})
+
+router.post('/users/login', async (req, res) => {
+    try {
+        const user = await User.findByCredentials(req.body.email, req.body.password)
+        res.send(user)
+    } catch (e) {
+        console.log(e)
+        res.status(401).send({ message: e.message})
     }
 })
 

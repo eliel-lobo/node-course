@@ -5,6 +5,8 @@ const auth = require('../middleware/auth')
 
 router.get('/users/me', auth, async (req, res) => {
 
+    await req.user.populate('tasks').execPopulate()
+    console.log(req.user)
     res.send(req.user)
     
 })
